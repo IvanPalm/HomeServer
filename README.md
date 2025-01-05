@@ -188,7 +188,7 @@ This configuration secures your server by enforcing key-based authentication and
    - Register custom domain on [Namecheap][namecheap_main].
 
 2. **DNS Configuration**:
-   - Configured `A` record assigned to homeserver public IP, setting host to `@`.
+   - Configured `AAAA` record assigned to homeserver public IPv6, setting host to `@`.
    - TODO: Set up subdomains for services (e.g., `nextcloud.myhomeserver.com`).
 
 3. **Dynamic DNS**:
