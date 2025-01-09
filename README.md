@@ -150,7 +150,7 @@ Fail2Ban helps protect against brute-force attacks by banning IPs with repeated 
    bantime = -1
    ```
 
-   - **Note**: `bantime = -1` bans indefinitely. Adjust as needed.
+   > **Note**: `bantime = -1` bans indefinitely. Adjust as needed.
 
 1. **Restart Fail2Ban**:  
 
@@ -214,7 +214,7 @@ This configuration secures your server by enforcing key-based authentication and
    - Query DNS server with `dig AAAA mydomain.net`, making sure the output in the `ANSWER SECTION` match the IPv6 of the server.
    - Test network connectivity with `ping6 mydomain.net`.
   
-> Note for myself: the Nameserver configuration may be overwirtten at the next reboot.
+> **Note for myself**: the Nameserver configuration may be overwirtten at the next reboot.
 ---
 
 ## Dockerized Services
