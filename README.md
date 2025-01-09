@@ -90,7 +90,7 @@ This setup provides basic protection, restricting access to only the specified p
 On your client machine, generate a secure SSH key pair:  
 
 ```bash
-ssh-keygen -t rsa -b 4096"
+ssh-keygen -t rsa -b 4096
 ```
 
 1. **Copy Public Key to Server**
