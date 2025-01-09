@@ -44,13 +44,13 @@ For the first connection, use passwork-based access from the admin user on the s
 
 UFW (Uncomplicated Firewall) is a simple and effective way to secure your server by managing incoming and outgoing traffic.
 
-1. **Install UFW** (if not already installed):  
+1. **Install UFW** (if not already installed)  
 
    ```bash
    sudo apt install ufw
    ```
 
-1. **Set Default Rules**:  
+1. **Set Default Rules**  
    Configure UFW to deny all incoming traffic by default and allow all outgoing traffic:  
 
    ```bash
@@ -58,21 +58,21 @@ UFW (Uncomplicated Firewall) is a simple and effective way to secure your server
    sudo ufw default allow outgoing
    ```
 
-1. **Allow SSH**:  
+1. **Allow SSH**  
    Specify the port for SSH to ensure you don't lock yourself out of the server:  
 
    ```bash
    sudo ufw allow ssh
    ```
 
-1. **Enable UFW**:  
+1. **Enable UFW**  
    Activate the firewall with the specified rules:  
 
    ```bash
    sudo ufw enable
    ```
 
-1. **Verify Configuration**:  
+1. **Verify Configuration**  
    Check which ports are allowed and ensure the firewall is active:  
 
    ```bash
@@ -93,11 +93,13 @@ This setup provides basic protection, restricting access to only the specified p
    ```
 
 1. **Copy Public Key to Server**
-   Transfer the public key to the server. Replace `<YOURNAME>`, `<SERVER-IP>`, and `<PORT>` with your username, server IP, and SSH port, respectively:  
+   Transfer the public key to the server with [`ssh-copy-id`](https://linux.die.net/man/1/ssh-copy-id).  
 
    ```bash
-   scp -P <PORT> ~/.ssh/id_rsa.pub <USER>@<SERVER-IP>:/home/<USER>/.ssh/authorized_keys
+   ssh-copy-id <USER>@<SERVER-IP>
    ```
+
+   Replace `<USER>` and `<SERVER-IP>` with your username and server IP, respectively
 
 1. **Enable Key-Based Login Only**
    Edit the SSH configuration file to allow only key-based authentication:  
@@ -124,20 +126,20 @@ This setup provides basic protection, restricting access to only the specified p
 
 Fail2Ban helps protect against brute-force attacks by banning IPs with repeated failed login attempts.
 
-1. **Install Fail2Ban**:  
+1. **Install Fail2Ban**  
 
    ```bash
    sudo apt install fail2ban
    ```
 
-1. **Create a Local Configuration**:  
+1. **Create a Local Configuration**  
    Copy the default configuration to a new `.local` file:  
 
    ```bash
    sudo cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
    ```
 
-1. **Set Up an SSH Jail**:  
+1. **Set Up an SSH Jail**  
    Add the following to the end of `/etc/fail2ban/fail2ban.local`:  
 
    ```ini
@@ -152,20 +154,20 @@ Fail2Ban helps protect against brute-force attacks by banning IPs with repeated 
 
    > **Note**: `bantime = -1` bans indefinitely. Adjust as needed.
 
-1. **Restart Fail2Ban**:  
+1. **Restart Fail2Ban**  
 
    ```bash
    sudo service fail2ban restart
    ```
 
-1. **Check Fail2Ban Status**:  
+1. **Check Fail2Ban Status**  
    View the status of the SSH jail:  
 
    ```bash
    sudo fail2ban-client status sshd
    ```
 
-1. **Unban an IP Address**:  
+1. **Unban an IP Address**  
    If needed, unban a specific IP:  
 
    ```bash
@@ -178,14 +180,14 @@ This configuration secures your server by enforcing key-based authentication and
 
 ### Setting Up a Custom Domain on Cloudfare
 
-1. **Domain Registration**:
+1. **Domain Registration**
    - Register custom domain on [Cloudfare][cloudfare_main].
 
-1. **DNS Configuration**:
+1. **DNS Configuration**
    - Configured `AAAA` record assigned to homeserver public IPv6, setting host to `@`.
    - TODO: Set up subdomains for services (e.g., `nextcloud.mydomain.net`).
 
-1. **Dynamic DNS**:
+1. **Dynamic DNS**
    - Configured `ddclient` as shown below.
    - Set `run_damenon=true` in `/etc/default/ddclient` for ddclient to run as a daemon.
    - Forced run in debug mode with `sudo ddclient -daemon=0 -debug -verbose -noquiet -force`.
@@ -225,75 +227,75 @@ Docker Compose should be installed as a plugin following the [official documenta
 
 ### Nextcloud
 
-**Purpose**:  
+**Purpose**  
 Nextcloud is a self-hosted platform for file sharing, calendar, and contact management.
 
-- **Features**:
+- **Features**
   - File storage and synchronization.
   - Collaborative document editing.
   - Calendar and contacts integration.
 
-- **Dedicated Documentation**:  
+- **Dedicated Documentation**  
   [Nextcloud Setup Guide](#)
 
 ---
 
 ### Calibre
 
-**Purpose**:  
+**Purpose**  
 Calibre is an e-book management application, ideal for organizing, converting, and accessing a personal library.
 
-- **Features**:
+- **Features**
   - E-book library management.
   - Format conversion for e-readers.
   - Web-based access to your collection.
 
-- **Dedicated Documentation**:  
+- **Dedicated Documentation**  
   [Calibre Setup Guide](#)
 
 ---
 
 ### Piwigo
 
-**Purpose**:  
+**Purpose**  
 Piwigo is an open-source photo gallery solution for hosting and sharing your personal photo collection.
 
-- **Features**:
+- **Features**
   - Album creation and tagging.
   - User and permission management.
   - Plugins for added functionality.
 
-- **Dedicated Documentation**:  
+- **Dedicated Documentation**  
   [Piwigo Setup Guide](#)
 
 ---
 
 ### Torrent Client
 
-**Purpose**:  
+**Purpose**  
 A torrent client allows efficient downloading and management of files via the BitTorrent protocol.
 
-- **Features**:
+- **Features**
   - Remote torrent management.
   - Bandwidth and connection controls.
   - Integration with media servers.
 
-- **Dedicated Documentation**:  
+- **Dedicated Documentation**  
   [Torrent Client Setup Guide](#)
 
 ---
 
 ### Jellyfin
 
-**Purpose**:  
+**Purpose**  
 Jellyfin is an open-source media server for streaming movies, TV shows, music, and more.
 
-- **Features**:
+- **Features**
   - Cross-platform media playback.
   - Metadata organization.
   - Support for multiple users and devices.
 
-- **Dedicated Documentation**:  
+- **Dedicated Documentation**  
   [Jellyfin Setup Guide](#)
 
 ---
