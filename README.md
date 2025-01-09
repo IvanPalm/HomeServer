@@ -81,8 +81,6 @@ UFW (Uncomplicated Firewall) is a simple and effective way to secure your server
 
 This setup provides basic protection, restricting access to only the specified ports. Be sure to configure additional rules for any other services you intend to expose.
 
-Here’s the summarized and formatted markdown for the instructions:
-
 ---
 
 ### Configure SSH Key Authentication
@@ -116,8 +114,9 @@ sudo nano /etc/ssh/sshd_config
 Update the following lines:  
 
 ```yml
-PasswordAuthentication no
 PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
 ```
 
 Restart the SSH daemon to apply changes:  
