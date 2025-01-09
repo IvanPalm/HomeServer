@@ -208,16 +208,20 @@ This configuration secures your server by enforcing key-based authentication and
 
 1. **Configure DNS Nameserver with resolvectl**
    - By default, the DNS server and DNS domain were set to localhost and to the router.
-   - Set the DNS server to Cloudfare nameservers with `sudo resolvectl dns interface_name 1.1.1.1 1.0.0.1` (find `interface_name` with `ip link`command).
-   - Set the DNS domain to mydomain.net with `sudo resolvectl domain interface_name mydomain.net`.
+   - Set the DNS server to Cloudfare nameservers with `sudo resolvectl dns <interface_name> 1.1.1.1 1.0.0.1` (find `<interface_name>` with `ip link`command).
+   - Set the DNS domain to mydomain.net with `sudo resolvectl domain <interface_name> mydomain.net`.
    - Check configuration with `resolvectl status`.
    - Query DNS server with `dig AAAA mydomain.net`, making sure the output in the `ANSWER SECTION` match the IPv6 of the server.
    - Test network connectivity with `ping6 mydomain.net`.
   
-> **Note for myself**: the Nameserver configuration may be overwirtten at the next reboot.
+> **Note**: the Nameserver configuration may be overwritten at the next server reboot.
 ---
 
 ## Dockerized Services
+
+Installation of Docker Engine can be performed as per [official documentation (using the `apt` repository)][docker_install]. Follow [post-installation instructions][docker_postinstall] for running Docker as a non-root user, and for starting Docker on boot with `systemd`.
+
+Docker Compose should be installed as a plugin following the [official documentation][docker_compose_plugin].
 
 ### Nextcloud
 
@@ -297,8 +301,10 @@ Jellyfin is an open-source media server for streaming movies, TV shows, music, a
 ## Resources and Links
 
 - Docker Documentation: [https://docs.docker.com](https://docs.docker.com)  
-- Let's Encrypt: [https://letsencrypt.org](https://letsencrypt.org)  
-- Namecheap Support: [https://www.namecheap.com/support/](https://www.namecheap.com/support/)  
+- Let's Encrypt: [https://letsencrypt.org](https://letsencrypt.org)
 - Links to individual service guides will be included in their respective sections.
 
 [cloudfare_main]:https://www.cloudflare.com/
+[docker_install]:https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+[docker_postinstall]:https://docs.docker.com/engine/install/linux-postinstall/
+[docker_compose_plugin]:https://docs.docker.com/compose/install/linux/
