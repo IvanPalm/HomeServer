@@ -10,6 +10,7 @@ This repository documents the configuration and setup of a home server, includin
 - [Configure SSH Key Authentication](#configure-ssh-key-authentication)
 - [Install and Configure Fail2Ban](#install-and-configure-fail2ban)
 - [Setting Up a Custom Domain on Cloudfare](#setting-up-a-custom-domain-on-cloudfare)
+- [Caddy](#caddy)
 - [Nextcloud](#nextcloud)
 - [Calibre](#calibre)
 - [Piwigo](#piwigo)
@@ -226,6 +227,21 @@ Installation of Docker Engine can be performed as per [official documentation (u
 
 Docker Compose should be installed as a plugin following the [official documentation][docker_compose_plugin].
 
+### Caddy
+
+**Purpose**  
+Caddy is a web server and reverse proxy, known for its simplicity and automatic HTTPS capabilities.
+
+- **Features**
+  - Reverse proxy with automatic SSL certificate management.
+  - Easy configuration using a `Caddyfile`.
+  - HTTP/2 and IPv6 support by default.
+
+- **Dedicated documentation**  
+  [Caddy Setup Guide](./services/caddy/README.md)
+
+---
+
 ### Nextcloud
 
 **Purpose**  
@@ -304,10 +320,10 @@ Jellyfin is an open-source media server for streaming movies, TV shows, music, a
 ## Resources and Links
 
 - Docker Documentation: [https://docs.docker.com](https://docs.docker.com)  
-- Let's Encrypt: [https://letsencrypt.org](https://letsencrypt.org)
+- Let's Encrypt: [https://letsencrypt.org](https://letsencrypt.org)  
 - Links to individual service guides will be included in their respective sections.
 
-[cloudfare_main]:https://www.cloudflare.com/
-[docker_install]:https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
-[docker_postinstall]:https://docs.docker.com/engine/install/linux-postinstall/
-[docker_compose_plugin]:https://docs.docker.com/compose/install/linux/
+[cloudfare_main]:https://www.cloudflare.com/  
+[docker_install]:https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository  
+[docker_postinstall]:https://docs.docker.com/engine/install/linux-postinstall/  
+[docker_compose_plugin]:https://docs.docker.com/compose/install/linux/  
