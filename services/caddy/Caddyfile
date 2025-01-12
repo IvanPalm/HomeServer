@@ -1,3 +1,0 @@
-rss.olivesnsun.net:443 {
-	reverse_proxy freshrss:80
-}
