@@ -208,7 +208,7 @@ This configuration secures your server by enforcing key-based authentication and
    mydomain.net
    ```
 
-1. **Configure DNS Nameserver with resolvectl**
+1. **Configure DNS Nameserver**
    - By default, the DNS server and DNS domain were set to localhost and to the router.
    - Open the `systemd-resolved` configuration file with `sudo nano /etc/systemd/resolved.conf`.
    - Add the following entries:
