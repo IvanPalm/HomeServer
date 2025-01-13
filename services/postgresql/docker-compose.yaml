@@ -1,0 +1,47 @@
+name: 'Postgres+PostGiS'
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.5
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - postgres_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  dbeaver:
+    image: dbeaver/cloudbeaver:24.3.2
+    container_name: dbeaver
+    environment:
+      - CB_SERVER_NAME=${CB_SERVER_NAME}
+      - CB_ADMIN_NAME=${CB_ADMIN_NAME}
+      - CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
+    volumes:
+      - dbeaver_data:/opt/cloudbeaver/workspace
+    ports:
+      - "${DBEAVER_PORT}:8978"
+    networks:
+      - postgres_network
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  dbeaver_data:
+
+networks:
+  postgres_network:
+    external: true
