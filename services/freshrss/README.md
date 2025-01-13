@@ -1,6 +1,6 @@
-## Caddy Setup Guide
+## FreshRSS Setup Guide
 
-This guide provides step-by-step instructions to set up Caddy as a reverse proxy in a Dockerized environment.
+This guide provides step-by-step instructions to set up FreshRSS as a reverse proxy in a Dockerized environment.
 
 ---
 
