@@ -31,7 +31,7 @@ Caddy is a web server and reverse proxy, known for its simplicity and automatic 
   - HTTP/2 and IPv6 support by default.
 
 - **Dedicated documentation**  
-  [Caddy Setup Guide](./services/caddy/README.md)
+  [Caddy Setup Guide](./caddy/README.md)
 
 ---
 
@@ -49,7 +49,7 @@ FreshRSS is a self-hosted RSS and Atom feed aggregator, designed for efficient c
   - API for third-party integrations
 
 - **Dedicated documentation**  
-  [FreshRSS Setup Guide](./services/freshrss/README.md)
+  [FreshRSS Setup Guide](./freshrss/README.md)
 
 ---
 
