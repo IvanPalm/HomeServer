@@ -29,7 +29,7 @@ This guide provides step-by-step instructions to set up FreshRSS as a reverse pr
        volumes:
          - ./config:/config
        ports:
-         - ${TO_PORT_80}:80
+         - ${HTTP_PORT}:80
        networks:
          - reverse_proxy
        restart: unless-stopped
