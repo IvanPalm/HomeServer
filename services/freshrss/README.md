@@ -8,83 +8,86 @@ This guide provides step-by-step instructions to set up Caddy as a reverse proxy
 
 #### 1. Set Up the FreshRSS Docker Directory
 
-	1. Change directory to FreshRSS root
+1. Change directory to FreshRSS root
+   
+   ```bash
+   cd freshrss
+   ```
 
-	   ```bash
-	   cd freshrss
-	   ```
+2. Create a `docker-compose.yaml` file:
+   
+   ```yaml
+   version: '3.8'
+   services:
+     freshrss:
+       image: lscr.io/linuxserver/freshrss:latest
+       container_name: freshrss
+       environment:
+         - PUID=${PUID}
+         - PGID=${PGID}
+         - TZ=${TZ}
+       volumes:
+         - ./config:/config
+       ports:
+         - ${TO_PORT_80}:80
+       networks:
+         - reverse_proxy
+       restart: unless-stopped
+   networks:
+     reverse_proxy:
+       external: true
+   ```
 
-	1. Create a `docker-compose.yaml` file:
+### 2. Configure Environment Variables
 
-	   ```
-	   version: '3.8'
-	   services:
-	     freshrss:
-	       image: lscr.io/linuxserver/freshrss:latest
-	       container_name: freshrss
-	       environment:
-	         - PUID=${PUID}
-	         - PGID=${PGID}
-	         - TZ=${TZ}
-	       volumes:
-	         - ./config:/config
-	       ports:
-	         - ${TO_PORT_80}:80
-	       networks:
-	         - reverse_proxy
-	       restart: unless-stopped
+Create a `.env` file in the same directory and enter the relevant variables. 
 
-	   networks:
-	     reverse_proxy:
-	       external: true
-	   ```
-#### 2. Configure Environment Variables
+For instance:
 
-	Create a `.env` file in the same directory and enter the relevant variables. 
+```
+PUID=0101
+PGID=0101
+TZ=Your/Timezone
+TO_PORT_80=0808
+```
 
-	For instance:
-
-	```
-	PUID=0101
-	PGID=0101
-	TZ=Your/Timezone
-	TO_PORT_80=0808
-	```
-
-	> **Note:** FreshRSS is configured to use the built-in SQLite database by default. No additional database setup is required.
-	The SQLite database and all configurations are stored in the mounted volumes, ensuring data persistence across updates.
+> **Note:** FreshRSS is configured to use the built-in SQLite database by default. No additional database setup is required.
+The SQLite database and all configurations are stored in the mounted volumes, ensuring data persistence across updates.
 
 #### 3. Reverse Proxy Configuration
 
-	To use Caddy as a reverse proxy, add the freshrss service to the `Caddyfile`.
+To use Caddy as a reverse proxy, add the freshrss service to the `Caddyfile`.
 
-	For instance:
+For instance:
 
-	```
-	rss.mydomain.net:443 {
-	    reverse_proxy freshrss:80
-	}
-	```
+```
+rss.mydomain.net:443 {
+    reverse_proxy freshrss:80
+}
+```
+
 #### 4. Launch FreshRSS
 
-	Run the FreshRSS container
+Run the FreshRSS container
 
-	```bash
-	docker compose up -d
-	```
+```bash
+docker compose up -d
+```
+
 #### 5. Initial Setup
 
-	1. Access FreshRSS at `https://rss.mydomain.net`
-	1. Follow the setup wizard:
-	   - Choose your language
-	   - Set up your admin account
-	   - For the database, select "SQLite" (built-in)
-	   - Complete the remaining steps as prompted
+1. Access FreshRSS at `https://rss.mydomain.net`
+1. Follow the setup wizard:
+   - Choose your language
+   - Set up your admin account
+   - For the database, select "SQLite" (built-in)
+   - Complete the remaining steps as prompted
+
 #### 6. Updating FreshRSS
 
-	To update FreshRSS, pull the latest image and recreate the container.
+To update FreshRSS, pull the latest image and recreate the container.
 
-	```
-	docker compose pull
-	docker compose up -d
-	```
+```bash
+docker compose pull
+docker compose up -d
+```
