@@ -398,3 +398,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Ignore env variables and auotmated config files
+**/.env
+**/config
+**/data
+[Cc]addyfile
