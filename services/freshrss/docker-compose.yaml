@@ -9,6 +9,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./config:/config
+      - ./data:/config/www/freshrss/data
     ports:
       - ${TO_PORT_80}:80
     networks:
