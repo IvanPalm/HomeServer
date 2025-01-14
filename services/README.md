@@ -4,6 +4,7 @@
 - [Install Docker](#install-docker)
 - [Caddy](#caddy)
 - [FreshRSS](#freshrss)
+- [PostgreSQL and Cloudbeaver](#postgresql-and-cloudbeaver)
 - [Nextcloud](#nextcloud)
 - [Calibre](#calibre)
 - [Piwigo](#piwigo)
@@ -50,6 +51,28 @@ FreshRSS is a self-hosted RSS and Atom feed aggregator, designed for efficient c
 
 - **Dedicated documentation**  
   [FreshRSS Setup Guide](./freshrss/README.md)
+
+---
+
+### PostgreSQL and Cloudbeaver
+
+**Purpose**  
+PostgreSQL (with PostGIS) and CloudBeaver together provide a robust database solution for the home server, combining reliable data storage with a practical and user-friendly GUI for database management.
+
+- **Features**  
+  - PostgreSQL:
+    - Advanced relational database with SQL support
+    - PostGIS extension for geospatial data processing
+    - Reliable and scalable for multi-service use
+    - Built-in data integrity and transaction management
+  - CloudBeaver:
+    - Web-based GUI for managing databases
+    - Multi-database support, including PostgreSQL
+    - Secure access with role-based controls
+    - Visual query builder and data visualization tools
+
+- **Dedicated documentation**  
+  [PostgreSQL+Cloudbeaver Setup Guide](./postgres-cloudbeaver/README.md)
 
 ---
 
