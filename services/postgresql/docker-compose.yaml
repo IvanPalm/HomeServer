@@ -34,6 +34,7 @@ services:
       - "${DBEAVER_PORT}:8978"
     networks:
       - postgres_network
+      - reverse_proxy
     depends_on:
       - postgres
     restart: unless-stopped
@@ -44,4 +45,6 @@ volumes:
 
 networks:
   postgres_network:
+    external: true
+  reverse_proxy:
     external: true
