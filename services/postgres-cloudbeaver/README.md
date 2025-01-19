@@ -154,7 +154,7 @@ https://cdbeaver.mydomain.net
 2. Log in with your admin credentials from the `.env` file.
 
 3. Add a PostgreSQL connection in CloudBeaver:
-   
+
    - **Host**: The container name assigned to the PostgreSQL server in the `docker-compose.yaml`.
    - **Database**: The value of `POSTGRES_DB` from `.env`.
    - **Username**: The value of `POSTGRES_USER` from `.env`.
@@ -175,3 +175,19 @@ chmod 600 .env
 ```bash
 curl -I https://cdbeaver.mydomain.net
 ```
+
+#### 7. Scheduled backup and cleanup
+
+The `backup_postgres.sh` script automates PostgreSQL database backups and cleanup. A cron job runs the script on the **first day of each month at 2:00 AM**.
+
+Key Features:
+
+1. Backup Creation
+   1. Loads variables from the `.env` file.
+   2. Dumps the PostgreSQL database using `pg_dump` from a Docker container.
+   3. Stores backups in a designated directory with filenames like `YYYYMMDD_HHMMSS_backup_DBNAME.sql`.
+
+2. Old Backup Cleanup
+   1. Deletes backups older than **90 days** from the backup directory.
+
+> **Note:** Any PostgreSQL backup can be restored using the script `restore_postgres.sh`.
