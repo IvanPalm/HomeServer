@@ -165,3 +165,19 @@ chmod 600 .env
 ```bash
 curl -I https://photo.mydomain.net
 ```
+
+---
+
+#### 6. Scheduled backup and cleanup
+
+The `backup_mariadb.sh` script automates MariaDB database backups and cleanup. A cron job runs the script on the **first day of each month at 1:00 AM**.
+
+Key Features:
+
+1. Backup Creation
+   1. Loads variables from the `.env` file.
+   2. Dumps the PostgreSQL database using `mysqldump` from a Docker container.
+   3. Stores backups in a designated directory with filenames like `YYYYMMDD_HHMMSS_backup_DBNAME.sql`.
+
+2. Old Backup Cleanup
+   1. Deletes backups older than **90 days** from the backup directory.
