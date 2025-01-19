@@ -9,11 +9,11 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./data/postgres_data:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_PORT}:5432"
     networks:
-      - postgres_network
+      - db_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
@@ -29,11 +29,11 @@ services:
       - CB_ADMIN_NAME=${CB_ADMIN_NAME}
       - CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
     volumes:
-      - dbeaver_data:/opt/cloudbeaver/workspace
+      - ./data/dbeaver_data:/opt/cloudbeaver/workspace
     ports:
       - "${DBEAVER_PORT}:8978"
     networks:
-      - postgres_network
+      - db_network
       - reverse_proxy
     depends_on:
       - postgres
@@ -44,7 +44,7 @@ volumes:
   dbeaver_data:
 
 networks:
-  postgres_network:
+  db_network:
     external: true
   reverse_proxy:
     external: true
