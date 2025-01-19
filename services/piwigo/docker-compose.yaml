@@ -1,0 +1,44 @@
+name: 'Piwigo'
+
+services:
+  piwigo:
+    container_name: piwigo
+    image: lscr.io/linuxserver/piwigo:15.3.0-ls290
+    environment:
+      - PUID=${PUID}          
+      - PGID=${PGID}          
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./config/piwigo_config:/config
+      - ./gallery:/gallery
+    ports:
+      - ${PIWIGO_PORT}:80
+    networks:
+      - db_network
+      - reverse_proxy
+    restart: unless-stopped
+
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.4-r1-ls169
+    container_name: mariadb
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TIMEZONE}
+      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${MARIADB_PASSWORD}
+      - MYSQL_USER=${MARIADB_USER}
+      - MYSQL_DATABASE=${MARIADB_DATABASE}
+    volumes:
+      - ./config/mariadb_config:/config
+    ports:
+      - ${MARIADB_PORT}:3306
+    networks:
+      - db_network
+    restart: unless-stopped
+
+networks:
+  db_network:
+    external: true
+  reverse_proxy:
+    external: true
