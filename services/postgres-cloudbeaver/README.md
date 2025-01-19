@@ -11,23 +11,24 @@ This guide provides step-by-step instructions to set up PostgreSQL (with PostGIS
 Ensure the necessary Docker networks exist:
 
 ```bash
-docker network create postgres_network
+docker network create db_network
 docker network ls
 ```
+
 > **Note:** if the network `reverse_proxy` is not listed in the output, [setup Caddy](../caddy/README.md) before continuing. 
 
 ---
 
 #### 2. Set Up the PostgreSQL + CloudBeaver Docker Directory
 
-1. Create a directory for the setup:
+1. Create a directory for the setup, if it doesn't exist.
 
 ```bash
 mkdir postgres-cloudbeaver
 cd postgres-cloudbeaver
 ```
 
-1. Create a `docker-compose.yaml` file.
+2. Create a `docker-compose.yaml` file.
 
 ```yaml
 name: 'Postgres-Postgis+Cloudbeaver'
@@ -41,11 +42,11 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./data/postgres_data:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_PORT}:5432"
     networks:
-      - postgres_network
+      - db_network
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
@@ -61,11 +62,11 @@ services:
       - CB_ADMIN_NAME=${CB_ADMIN_NAME}
       - CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
     volumes:
-      - dbeaver_data:/opt/cloudbeaver/workspace
+      - ./data/dbeaver_data:/opt/cloudbeaver/workspace
     ports:
       - "${DBEAVER_PORT}:8978"
     networks:
-      - postgres_network
+      - db_network
       - reverse_proxy
     depends_on:
       - postgres
@@ -74,22 +75,24 @@ volumes:
   postgres_data:
   dbeaver_data:
 networks:
-  postgres_network:
+  db_network:
     external: true
   reverse_proxy:
     external: true
 ```
 
-> **Note:** A `postgis` image is used for the convenince of having spatial extensions already installed in the container.
+A `postgis` image is used for the convenince of having spatial extensions already installed in the container.
 
-2. Create an `.env` file to store environment variables.
+> **Note:** Make sure the directories passed as volumes exist in the root directory of this service.
+
+3. Create an `.env` file to store environment variables.
 
 ```bash
 nano .env
 ```
 
 Example `.env` file:
-   
+
 ```plaintext
 POSTGRES_DB=your_database_name
 POSTGRES_USER=your_username
@@ -105,7 +108,7 @@ DBEAVER_PORT=8978
 
 #### 3. Configure the Reverse Proxy with Caddy
 
-1. Add the `Caddyfile` to the reverse proxy setup:
+1. Add the service to the `Caddyfile` for enabling reverse proxy.
 
 ```bash
 nano /path/to/caddy/Caddyfile
@@ -113,23 +116,13 @@ nano /path/to/caddy/Caddyfile
 
 Example entry for **CloudBeaver**:
 
-```
+```plaintext
 cdbeaver.mydomain.net:443 {
     reverse_proxy dbeaver:8978
 }
 ```
 
-2. Ensure that the `dbeaver` container is connected to the `reverse_proxy` network.
-
----
-
-#### 4. Launch the Setup
-
-1. Start the PostgreSQL and CloudBeaver containers.
-
-```bash
-docker-compose up -d
-```
+> **Note:** The `docker-compose` shown above will connect the `dbeaver` container to the `reverse_proxy` network.
 
 2. Start the Caddy container (if not already running).
 
@@ -137,6 +130,17 @@ docker-compose up -d
 cd /path/to/caddy
 docker-compose up -d
 ```
+
+---
+
+#### 4. Launch the Setup
+
+Start the PostgreSQL and CloudBeaver containers.
+
+```bash
+docker-compose up -d
+```
+
 ---
 
 #### 5. Access CloudBeaver and Connect to PostgreSQL
@@ -151,7 +155,7 @@ https://cdbeaver.mydomain.net
 
 3. Add a PostgreSQL connection in CloudBeaver:
    
-   - **Host**: Find IP of Postgres server with `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' postgres`
+   - **Host**: The container name assigned to the PostgreSQL server in the `docker-compose.yaml`.
    - **Database**: The value of `POSTGRES_DB` from `.env`.
    - **Username**: The value of `POSTGRES_USER` from `.env`.
    - **Password**: The value of `POSTGRES_PASSWORD` from `.env`.
@@ -167,7 +171,7 @@ chmod 600 .env
 ```
 
 2. Test the SSL setup.
-   
+
 ```bash
 curl -I https://cdbeaver.mydomain.net
 ```
