@@ -1,4 +1,4 @@
-version: '3.8'
+name: 'Caddy'
 services:
   caddy:
     container_name: caddy
@@ -11,8 +11,8 @@ services:
       - reverse_proxy
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
+      - ./data:/data
+      - ./config:/config
 
 volumes:
   caddy_data:
