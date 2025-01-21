@@ -1,0 +1,21 @@
+name: 'Calibre'
+
+services:
+  calibre:
+    image: lscr.io/linuxserver/calibre:v7.24.0-ls317
+    container_name: calibre
+    environment:
+      - PUID=${PUID}               
+      - PGID=${PGID}               
+      - TZ=${TZ}                   
+    volumes:
+      - ./config:/config     
+    networks:
+      - reverse_proxy              
+    ports:
+      - ${CALIBRE_PORT}:8080       
+    restart: unless-stopped        
+
+networks:
+  reverse_proxy:
+    external: true                 

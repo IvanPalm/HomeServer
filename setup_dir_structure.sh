@@ -3,59 +3,45 @@
 # Prompt the user for the base directory
 read -p "Enter the base directory for your home server (e.g., /homeserver): " BASE_DIR
 
-# Create the main docker directory and subdirectories
-# mkdir -p "$BASE_DIR/app-data"
-mkdir -p "$BASE_DIR/services/nextcloud/data"
-mkdir -p "$BASE_DIR/services/calibre/library"
-mkdir -p "$BASE_DIR/services/calibre/config"
-mkdir -p "$BASE_DIR/services/utorrent-client/data"
-mkdir -p "$BASE_DIR/services/utorrent-client/config"
-mkdir -p "$BASE_DIR/services/jellyfin/data"
-mkdir -p "$BASE_DIR/services/jellyfin/config"
-mkdir -p "$BASE_DIR/services/piwigo/data"
-mkdir -p "$BASE_DIR/services/piwigo/config"
-
-# Create README.md files for each service
-cat <<EOL > "$BASE_DIR/services/nextcloud/README.md"
-# Nextcloud
-Documentation for setting up and configuring Nextcloud.
+# Function to create directory and README if they don't exist
+create_dir_and_readme() {
+    local dir="$1"
+    local service_name="$2"
+    
+    if [ -d "$dir" ]; then
+        echo "Folder $dir exists. Skipping."
+    else
+        mkdir -p "$dir"
+        echo "Created folder: $dir"
+    fi
+    
+    local readme_file="$dir/README.md"
+    if [ -f "$readme_file" ]; then
+        echo "README for $service_name exists. Skipping."
+    else
+        cat <<EOL > "$readme_file"
+# $service_name
+Documentation for setting up and configuring $service_name.
 EOL
+        echo "Created README for $service_name"
+    fi
+}
 
-cat <<EOL > "$BASE_DIR/services/calibre/README.md"
-# Calibre
-Documentation for setting up and configuring Calibre.
-EOL
+# List of services
+services=(
+    "nextcloud"
+    "calibre"
+    "utorrent-client"
+    "jellyfin"
+    "piwigo"
+    "caddy"
+    "freshrss"
+)
 
-cat <<EOL > "$BASE_DIR/services/utorrent-client/README.md"
-# uTorrent Client
-Documentation for setting up and configuring uTorrent Client.
-EOL
-
-cat <<EOL > "$BASE_DIR/services/jellyfin/README.md"
-# Jellyfin
-Documentation for setting up and configuring Jellyfin.
-EOL
-
-cat <<EOL > "$BASE_DIR/services/piwigo/README.md"
-# Piwigo
-Documentation for setting up and configuring Piwigo.
-EOL
-
-# # Create a central README file in the root directory
-# cat <<EOL > /homeserver/README.md
-# # Home Server Setup
-
-# This document provides an overview of the home server setup, including services and configurations.
-
-# ## Services
-
-# - Nextcloud
-# - Calibre
-# - uTorrent Client
-# - Jellyfin
-# - Piwigo
-
-# Each service has its own directory under /homeserver/docker/services.
-# EOL
+# Create directories and README files for each service
+for service in "${services[@]}"; do
+    create_dir_and_readme "$BASE_DIR/services/$service/data" "$service"
+    create_dir_and_readme "$BASE_DIR/services/$service/config" "$service"
+done
 
 echo "Directory structure created successfully."
