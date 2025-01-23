@@ -208,12 +208,14 @@ This configuration secures your server by enforcing key-based authentication and
    - By default, the DNS server and DNS domain were set to localhost and to the router.
    - Open the `systemd-resolved` configuration file with `sudo nano /etc/systemd/resolved.conf`.
    - Add the following entries:
-   
+
    ```yml
    DNS=1.1.1.1 1.0.0.1
    Domains=mydomain.net
    ```
+
    - Restart the service with `sudo systemctl restart systemd-resolved`.
+
 ---
 
 ### Dockerized Services
