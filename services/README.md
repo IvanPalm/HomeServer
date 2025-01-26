@@ -87,7 +87,7 @@ Nextcloud is a self-hosted platform for file sharing, calendar, and contact mana
   - Calendar and contacts integration.
 
 - **Dedicated Documentation**  
-  [Nextcloud Setup Guide](#)
+  [Nextcloud Setup Guide](./nextcloud/README.md)
 
 ---
 
@@ -102,7 +102,7 @@ Calibre is an e-book management application, ideal for organizing, converting, a
   - Web-based access to your collection.
 
 - **Dedicated Documentation**  
-  [Calibre Setup Guide](#)
+  [Calibre Setup Guide](./calibre/README.md)
 
 ---
 
@@ -117,7 +117,7 @@ Piwigo is an open-source photo gallery solution for hosting and sharing your per
   - Plugins for added functionality.
 
 - **Dedicated Documentation**  
-  [Piwigo Setup Guide](#)
+  [Piwigo Setup Guide](./piwigo/README.md)
 
 ---
 
