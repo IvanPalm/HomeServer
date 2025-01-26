@@ -32,7 +32,7 @@ This document outlines the steps to set up and configure my home server. The ser
 
 ## Networking
 
-For the first connection, use passwork-based access from the admin user on the server.
+For the first connection, use password-based access from the admin user on the server.
 
 ---
 
@@ -180,12 +180,12 @@ This configuration secures your server by enforcing key-based authentication and
    - Register custom domain on [Cloudfare][cloudfare_main].
 
 1. **DNS Configuration**
-   - Configured `AAAA` record assigned to homeserver public IPv6, setting host to `@`.
+   - Configured `AAAA` record assigned to home-server public IPv6, setting host to `@`.
    - TODO: Set up subdomains for services (e.g., `nextcloud.mydomain.net`).
 
 1. **Dynamic DNS**
    - Configured `ddclient` as shown below.
-   - Set `run_damenon=true` in `/etc/default/ddclient` for ddclient to run as a daemon.
+   - Set `run_damenon=true` in `/etc/default/ddclient` for `ddclient` to run as a daemon.
    - Forced run in debug mode with `sudo ddclient -daemon=0 -debug -verbose -noquiet -force`.
   
    ```yml
@@ -204,7 +204,7 @@ This configuration secures your server by enforcing key-based authentication and
    mydomain.net
    ```
 
-1. **Configure DNS Nameserver**
+1. **Configure DNS Name-server**
    - By default, the DNS server and DNS domain were set to localhost and to the router.
    - Open the `systemd-resolved` configuration file with `sudo nano /etc/systemd/resolved.conf`.
    - Add the following entries:
