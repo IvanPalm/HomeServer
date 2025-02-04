@@ -1,0 +1,29 @@
+name: "Navidrome"
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    user: 1000:1000
+    environment:
+      ND_CONFIGFILE: ${ND_CONFIGFILE}
+      ND_BASEURL: ${ND_BASEURL} 
+      ND_BACKUP_SCHEDULE: ${ND_BACKUP_SCHEDULE}
+      ND_BACKUP_COUNT: ${ND_BACKUP_COUNT}
+      ND_IMAGECACHESIZE: ${ND_IMAGECACHESIZE}
+      ND_SCANSCHEDULE: ${ND_SCANSCHEDULE}
+      ND_LOGLEVEL: ${ND_LOGLEVEL}  
+      ND_SESSIONTIMEOUT: ${ND_SESSIONTIMEOUT}
+    volumes:
+      - "./data:/data"
+      - "./music:/music:ro"
+      - "./config:/config"
+    ports:
+      - ${ND_PORT}:4533
+    networks:
+      - reverse_proxy
+    restart: unless-stopped
+
+networks:
+  reverse_proxy:
+    external: true
+    
