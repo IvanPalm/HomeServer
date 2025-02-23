@@ -1,6 +1,5 @@
 ## Table of Contents
 
-
 - [Install Docker](#install-docker)
 - [Caddy](#caddy)
 - [FreshRSS](#freshrss)

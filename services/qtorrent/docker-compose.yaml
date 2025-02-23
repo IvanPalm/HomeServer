@@ -1,0 +1,53 @@
+name: "qTorrent"
+services:
+  nordvpn:
+    container_name: gluetun-nord
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "${QBITTORRENT_WEBUI_PORT}:8089"
+      - "${TRANSMISSION_WEBUI_PORT}:9091"
+      - "${TRANSMISSION_PORT}:51413"
+      - "${TRANSMISSION_PORT}:51413/udp"
+      - "${QBITTORRENT_PORT}:51420"
+      - "${QBITTORRENT_PORT}:51420/udp"
+    environment:
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - VPN_TYPE=${VPN_TYPE}
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - SERVER_REGIONS=${NORDVPN_COUNTRY}
+      - FIREWALL_VPN_INPUT_PORTS=51420
+      - FIREWALL_VPN_OUTPUT_PORTS=51420
+      - FIREWALL=on
+    restart: always
+  qbittorrent:
+    image: linuxserver/qbittorrent:4.5.2
+    network_mode: "service:nordvpn"
+    container_name: qbittorrent-nord
+    depends_on:
+      - nordvpn
+    environment:
+      - WEBUI_PORT=${QBITTORRENT_WEBUI_PORT}
+      - PUID=${QBITTORRENT_PUID}
+      - PGID=${QBITTORRENT_PGID}
+      - TZ=${TZ}
+    volumes:
+      - "./config/qtorrent:/config"
+      - "./data/qtorrent:/downloads"
+    restart: always
+  transmission:
+    image: ghcr.io/linuxserver/transmission:4.0.2
+    network_mode: "service:nordvpn"
+    container_name: transmission-nord
+    depends_on:
+      - nordvpn
+    environment:
+      - PUID=${TRANSMISSION_PUID}
+      - PGID=${TRANSMISSION_PGID}
+      - TZ=${TZ}
+    volumes:
+      - "/config/trans:/config"
+      - "/data/trans:/downloads"
+      - "/data/trans/watch:/watch"
+    restart: always
