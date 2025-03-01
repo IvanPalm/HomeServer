@@ -34,7 +34,7 @@ services:
       - TZ=${TZ}
     volumes:
       - "./config/qtorrent:/config"
-      - "./data/qtorrent:/downloads"
+      - "/home/hs_admin/qtorrent:/downloads"
     restart: always
   transmission:
     image: ghcr.io/linuxserver/transmission:4.0.2

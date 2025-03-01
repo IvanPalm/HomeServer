@@ -10,7 +10,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./config/piwigo_config:/config
-      - ./gallery:/gallery
+      - /home/hs_admin/gallery:/gallery
     ports:
       - ${PIWIGO_PORT}:80
     networks:

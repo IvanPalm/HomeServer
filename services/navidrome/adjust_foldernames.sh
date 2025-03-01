@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Prompt the user for the root music directory
-DEFAULT_DIR="./music"
+DEFAULT_DIR="/home/hs_admin/music"
 read -p "Is your music folder '$DEFAULT_DIR'? (y/n): " CONFIRM
 if [[ "$CONFIRM" != "y" ]]; then
     read -p "Enter the full path to your music folder: " MUSIC_DIR

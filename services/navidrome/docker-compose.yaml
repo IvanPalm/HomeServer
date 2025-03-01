@@ -15,7 +15,7 @@ services:
       ND_SESSIONTIMEOUT: ${ND_SESSIONTIMEOUT}
     volumes:
       - "./data:/data"
-      - "./music:/music:ro"
+      - "/home/hs_admin/music:/music:ro"
       - "./config:/config"
     ports:
       - ${ND_PORT}:4533
