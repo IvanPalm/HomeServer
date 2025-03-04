@@ -19,6 +19,3 @@ services:
 networks:
   reverse_proxy:
     external: true
-
-volumes:
-  jellyfin-config:
