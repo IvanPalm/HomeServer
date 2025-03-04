@@ -13,7 +13,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [ -f "$SCRIPT_DIR/.env" ]; then
     source "$SCRIPT_DIR/.env"
 else
-    log_message "[MARIADB][ERROR] .env file not found in $SCRIPT_DIR! Exiting."
+    log_message "[PIWIGO][ERROR] .env file not found in $SCRIPT_DIR! Exiting."
     exit 1
 fi
 
@@ -29,30 +29,30 @@ TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 BACKUP_FILE=$BACKUP_DIR/${TIMESTAMP}_backup_${MARIADB_DATABASE}.sql
 
 # Run mysqldump inside the MariaDB container
-log_message "[MARIADB] Starting backup..."
+log_message "[PIWIGO] Starting backup..."
 if docker exec -i $CONTAINER_NAME mariadb-dump -u $MARIADB_USER -p$MARIADB_PASSWORD $MARIADB_DATABASE > $BACKUP_FILE; then
     if [ -f "$BACKUP_FILE" ]; then
-        log_message "[MARIADB] Backup completed successfully: $BACKUP_FILE"
+        log_message "[PIWIGO] Backup completed successfully: $BACKUP_FILE"
     else
-        log_message "[MARIADB][ERROR] Backup failed: Backup file does not exist."
+        log_message "[PIWIGO][ERROR] Backup failed: Backup file does not exist."
         exit 1
     fi
 else
-    log_message "[MARIADB][ERROR] Backup failed: An error occurred during the mysqldump process."
+    log_message "[PIWIGO][ERROR] Backup failed: An error occurred during the mysqldump process."
     exit 1
 fi
 
 # Check and delete backups older than 90 days
-log_message "[MARIADB] Checking for backups older than 90 days..."
+log_message "[PIWIGO] Checking for backups older than 90 days..."
 OLD_BACKUPS=$(find "$BACKUP_DIR" -type f -mtime +90)
 
 if [ -z "$OLD_BACKUPS" ]; then
-    log_message "[MARIADB] No backups older than 90 days found."
+    log_message "[PIWIGO] No backups older than 90 days found."
 else
     # Deleting the old backups
     echo "$OLD_BACKUPS" | while read -r FILE; do
-        log_message "[MARIADB] Deleting: $FILE"
+        log_message "[PIWIGO] Deleting: $FILE"
         rm -f "$FILE"
     done
-    log_message "[MARIADB] Old backups deleted successfully."
+    log_message "[PIWIGO] Old backups deleted successfully."
 fi
