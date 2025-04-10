@@ -9,7 +9,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - ./data/postgres_data:/var/lib/postgresql/data
+      - /home/services/postgres-cloudbeaver/postgres_data:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_PORT}:5432"
     networks:
@@ -29,7 +29,7 @@ services:
       - CB_ADMIN_NAME=${CB_ADMIN_NAME}
       - CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
     volumes:
-      - ./data/dbeaver_data:/opt/cloudbeaver/workspace
+      - /home/services/postgres-cloudbeaver/dbeaver_data:/opt/cloudbeaver/workspace
     ports:
       - "${DBEAVER_PORT}:8978"
     networks:

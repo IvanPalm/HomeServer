@@ -14,9 +14,9 @@ services:
       ND_LOGLEVEL: ${ND_LOGLEVEL}  
       ND_SESSIONTIMEOUT: ${ND_SESSIONTIMEOUT}
     volumes:
-      - "./data:/data"
-      - "/home/hs_admin/media/music:/music:ro"
-      - "./config:/config"
+      - "/home/services/navidrome/data:/data"
+      - "/mnt/raid_mirror/media/music:/music:ro"
+      - "/home/services/navidrome/config:/config"
     ports:
       - ${ND_PORT}:4533
     networks:

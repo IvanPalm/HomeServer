@@ -8,8 +8,8 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ./config:/config
-      - /home/hs_admin/media:/media
+      - /home/services/jellyfin/config:/config
+      - /mnt/raid_mirror/media:/media
     ports:
       - ${JFIN_PORT}:8096
     networks:

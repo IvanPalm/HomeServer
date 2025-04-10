@@ -9,8 +9,8 @@ services:
       - PGID=${PGID}          
       - TZ=${TIMEZONE}
     volumes:
-      - ./config/piwigo_config:/config
-      - /home/hs_admin/gallery:/gallery
+      - /home/services/piwigo/config:/config
+      - /mnt/raid_mirror/media/images/piwigo_gallery:/gallery
     ports:
       - ${PIWIGO_PORT}:80
     networks:
@@ -30,7 +30,7 @@ services:
       - MYSQL_USER=${MARIADB_USER}
       - MYSQL_DATABASE=${MARIADB_DATABASE}
     volumes:
-      - ./config/mariadb_config:/config
+      - /home/services/piwigo/mariadb_config:/config
     ports:
       - ${MARIADB_PORT}:3306
     networks:

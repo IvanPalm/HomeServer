@@ -11,8 +11,8 @@ services:
       - reverse_proxy
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./data:/data
-      - ./config:/config
+      - /home/services/caddy/data:/data
+      - /home/services/caddy/config:/config
 
 volumes:
   caddy_data:
